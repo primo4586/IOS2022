@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Feeder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
   private AutoContainer autoContainer;
 
   private Climb climb;
+  private Feeder feeder;
   private Shooter shooter;
 
   /**
@@ -33,10 +35,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     this.climb = new Climb();
+    this.feeder = new Feeder();
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
     this.shooter = new Shooter();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    robotContainer = new RobotContainer(climb, shooter);
+    robotContainer = new RobotContainer(climb,feeder, shooter);
     autoContainer = new AutoContainer();
   }
 

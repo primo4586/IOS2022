@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -23,13 +24,15 @@ public class RobotContainer {
 
   private Climb climb;
   private Shooter shooter;
+  private Feeder feeder;
 
   private Joystick driverJoystick;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb, Shooter shooter) {
+  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter) {
     this.climb = climb;
     this.shooter = shooter;
+    this.feeder = feeder;
 
     buildDefaultCommands();
     // Configure the button bindings

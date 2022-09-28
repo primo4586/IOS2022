@@ -23,4 +23,8 @@ public final class Constants {
     public static final class ShooterConstants {
         public static final int SHOOTER_MOTOR_PORT = 15;
     }
+    
+    public static final class FeederConstants {
+        public static final int FEEDER_MOTOR_PORT = 6;
+    }
 }
