@@ -27,4 +27,10 @@ public final class Constants {
     public static final class FeederConstants {
         public static final int FEEDER_MOTOR_PORT = 6;
     }
+    
+    public static final class Intake{
+        public static final int INTAKE_MOTOR =8;
+        public static final int INTAKE_SELENOID_lEFT=9;
+        public static final int INTAKE_SELENOID_RIGHT=10;
+    }
 }
