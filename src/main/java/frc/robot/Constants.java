@@ -21,9 +21,9 @@ public final class Constants {
     }
 
     public static final class DriverConstants{
-        public static final int LEFT_LEADER_MOTOR_PORT = 0;
+        public static final int LEFT_LEADER_MOTOR_PORT = 2;
         public static final int RIGHT_LEADER_MOTOR_PORT = 0;
-        public static final int LEFT_FOLLOWER_MOTOR_PORT = 0;
-        public static final int RIGHT_FOLLOWER_MOTOR_PORT = 0;
+        public static final int LEFT_FOLLOWER_MOTOR_PORT = 1;
+        public static final int RIGHT_FOLLOWER_MOTOR_PORT = 3;
     }
 }
