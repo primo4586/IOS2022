@@ -5,9 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,10 +22,14 @@ import frc.robot.subsystems.Climb;
 public class RobotContainer {
 
   private Climb climb;
+  private Shooter shooter;
+
+  private Joystick driverJoystick;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb) {
+  public RobotContainer(Climb climb, Shooter shooter) {
     this.climb = climb;
+    this.shooter = shooter;
 
     buildDefaultCommands();
     // Configure the button bindings
@@ -35,7 +43,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    this.driverJoystick = new Joystick(0);
+    JoystickButton xButton = new JoystickButton(driverJoystick, XboxController.Button.kX.value);
+    xButton.whenHeld(new AccelerateShooter(shooter , 0.5));
   }
 
   public void buildDefaultCommands() {

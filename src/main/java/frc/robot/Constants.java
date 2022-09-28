@@ -19,4 +19,8 @@ public final class Constants {
         public static final int LEFT_MOTOR_PORT = 9;
         public static final double CHAIN_VOLTAGE = 6.5;
     }
+
+    public static final class ShooterConstants {
+        public static final int SHOOTER_MOTOR_PORT = 15;
+    }
 }
