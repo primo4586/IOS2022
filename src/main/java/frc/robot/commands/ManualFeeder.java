@@ -26,13 +26,13 @@ public class ManualFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.setSpeed(feederSpeed);
+    feeder.setFeederSpeed(feederSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    feeder.setSpeed(0);
+    feeder.setFeederSpeed(0);
   }
 
   // Returns true when the command should end.

@@ -24,7 +24,11 @@ public class Feeder extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double speed){
+  public void setFeederSpeed(double speed){
     feederMotor.set(speed);
+  }
+
+  public void setFeederVolt(double volt){
+    feederMotor.setVoltage(volt);
   }
 }
