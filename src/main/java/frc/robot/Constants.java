@@ -27,4 +27,10 @@ public final class Constants {
     public static final class FeederConstants {
         public static final int FEEDER_MOTOR_PORT = 6;
     }
+
+    public static final class Pneumatics {
+        public static final int pcmPort = 8;
+        public static final int feederPort = 0; 
+        
+    }
 }

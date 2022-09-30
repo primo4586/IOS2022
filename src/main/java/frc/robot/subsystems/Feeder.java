@@ -7,15 +7,22 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.FeederConstants;
+import frc.robot.Constants.Pneumatics;
+
 
 public class Feeder extends SubsystemBase {
   private WPI_TalonFX feederMotor;
+  private Solenoid feederSol;
+  private boolean solState;
   /** Creates a new Feeder. */
   public Feeder() {
-    this.feederMotor = new WPI_TalonFX(Constants.FeederConstants.FEEDER_MOTOR_PORT);
-    feederMotor.setNeutralMode(NeutralMode.Brake);
+    this.feederMotor = new WPI_TalonFX(FeederConstants.FEEDER_MOTOR_PORT);
+    this.feederSol =  new Solenoid(Pneumatics.pcmPort,  PneumaticsModuleType.CTREPCM, Pneumatics.feederPort);
+    this.solState = true; 
   }
     
   @Override
@@ -31,4 +38,23 @@ public class Feeder extends SubsystemBase {
   public void setFeederVolt(double volt){
     feederMotor.setVoltage(volt);
   }
+
+  
+
+  public void changeFeederSolenoidState(){
+      this.solState = !this.solState;
+      this.feederSol.set(solState);
+  }
+
+  public boolean getFeederSolenoidState(){
+    return this.solState;
+  }
+
+  //Wasn't sure if neccessary, but it wouldn't hurt.
+  public void setFeederSolenoid(boolean state){
+    this.solState = state;
+    this.feederSol.set(state);
+  }
+
+
 }
