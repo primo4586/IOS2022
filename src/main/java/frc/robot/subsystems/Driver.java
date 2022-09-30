@@ -19,7 +19,7 @@ public class Driver extends SubsystemBase {
     private WPI_TalonFX m_rightLeader;
     private WPI_TalonFX m_rightFollower;
 
-    // controller axsess work together
+    // for motors to work together
     private DifferentialDrive diffDrive;
 
   /** Creates a new Driver. */
@@ -36,7 +36,7 @@ public class Driver extends SubsystemBase {
     this.m_leftFollower.follow(m_leftLeader, FollowerType.PercentOutput);
 
     //creates new diffrentialDrive
-    this.diffDrive = new DifferentialDrive(m_rightLeader, m_leftLeader);
+    this.diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
   }
 
   @Override
@@ -46,7 +46,11 @@ public class Driver extends SubsystemBase {
   
   // sets the speed value to right motors and the rotation to left motors
   // gets double speed, double rotation
+  // how arcadeDrive works:
+  // right motors: yAxessValue - xAxessValue
+  // left motors: max(yAxessValue, xAxessValue)
+  
   public void d_control(double speed, double rotation){
-    this.diffDrive.arcadeDrive(speed, -rotation);
+    this.diffDrive.arcadeDrive(speed, -rotation);//give it speeeeeeeeed
   }
 }
