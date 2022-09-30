@@ -38,10 +38,6 @@ public class Climb extends SubsystemBase {
     this.bSideState = true;
   }
 
-  public void test(){
-    
-  }
-
   public void changePClimbA(boolean state){
     this.aSideState= state;
     this.solenoidA.set(state);
