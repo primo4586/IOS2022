@@ -21,9 +21,19 @@ public final class Constants {
     }
 
     public static final class DriverConstants{
+        // motors
         public static final int LEFT_LEADER_MOTOR_PORT = 2;
         public static final int RIGHT_LEADER_MOTOR_PORT = 0;
         public static final int LEFT_FOLLOWER_MOTOR_PORT = 1;
         public static final int RIGHT_FOLLOWER_MOTOR_PORT = 3;
+
+        // joysticks
+        public static final int D_CONTROLLER_PORT = 0;
+        
+        // arcadeDrive limiters
+        public static final double SPEED_LIMITER = 0.6;
+        public static final double ROTATION_LIMITER = 0.6;
+
+
     }
 }
