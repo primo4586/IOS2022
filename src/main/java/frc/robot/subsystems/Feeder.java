@@ -21,7 +21,7 @@ public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
   public Feeder() {
     this.feederMotor = new WPI_TalonFX(FeederConstants.FEEDER_MOTOR_PORT);
-    this.feederSol =  new Solenoid(Pneumatics.pcmPort,  PneumaticsModuleType.CTREPCM, Pneumatics.feederPort);
+    this.feederSol =  new Solenoid(Pneumatics.PCM_PORT,  PneumaticsModuleType.CTREPCM, Pneumatics.FEEDER_PORT);
     this.solState = true; 
   }
     
