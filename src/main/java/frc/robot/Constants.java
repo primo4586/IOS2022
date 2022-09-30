@@ -18,5 +18,9 @@ public final class Constants {
         public static final int RIGHT_MOTOR_PORT = 10;
         public static final int LEFT_MOTOR_PORT = 9;
         public static final double CHAIN_VOLTAGE = 6.5;
+
+        public static final int pcmPort = 8;
+        public static final int climbSolenoidA = 6;
+        public static final int climbSolenoidB = 7;
     }
 }
