@@ -19,8 +19,15 @@ public final class Constants {
         public static final int LEFT_MOTOR_PORT = 9;
         public static final double CHAIN_VOLTAGE = 6.5;
 
-        public static final int pcmPort = 8;
-        public static final int climbSolenoidA = 6;
-        public static final int climbSolenoidB = 7;
+        public static final int PCM_PORT = 8;
+        public static final int CLIMB_SOLENOID_A = 6;
+        public static final int CLIMB_SOLENOID_B = 7;
+    }
+
+    public static final class LimelightConstants{
+        public static final double LIMELIGHT_Y_ANGLE = 40;
+        
+        public static final double LIMELIGHT_HEIGHT = 0.70;
+        public static final double TARGET_HEIGHT = 2.59;
     }
 }

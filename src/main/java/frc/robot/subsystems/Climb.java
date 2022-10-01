@@ -27,11 +27,11 @@ public class Climb extends SubsystemBase {
     this.m_climbleft = new WPI_TalonFX(ClimbConstants.LEFT_MOTOR_PORT);
     this.m_climbleft.setInverted(true);
 
-    this.solenoidA = new Solenoid(Constants.ClimbConstants.pcmPort, PneumaticsModuleType.CTREPCM,
-    Constants.ClimbConstants.climbSolenoidA);
+    this.solenoidA = new Solenoid(Constants.ClimbConstants.PCM_PORT, PneumaticsModuleType.CTREPCM,
+    Constants.ClimbConstants.CLIMB_SOLENOID_A);
         
-    this.solenoidB = new Solenoid(Constants.ClimbConstants.pcmPort, PneumaticsModuleType.CTREPCM,
-    Constants.ClimbConstants.climbSolenoidB);
+    this.solenoidB = new Solenoid(Constants.ClimbConstants.PCM_PORT, PneumaticsModuleType.CTREPCM,
+    Constants.ClimbConstants.CLIMB_SOLENOID_B);
 
     this.enabled = false;
     this.aSideState = true;
