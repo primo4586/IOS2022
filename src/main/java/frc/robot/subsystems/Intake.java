@@ -23,9 +23,9 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
 
-    this.intakeMotor = new WPI_TalonSRX(Constants.Intake.INTAKE_MOTOR);
-    this.solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.INTAKE_SELENOID_lEFT);
-    this.solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.INTAKE_SELENOID_RIGHT);
+    this.intakeMotor = new WPI_TalonSRX(Constants.IntakeConstants.INTAKE_MOTOR);
+    this.solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SELENOID_lEFT);
+    this.solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SELENOID_RIGHT);
 
   }
 
