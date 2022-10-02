@@ -19,14 +19,17 @@ public class Limelight {
     }
     
     public void tableUpdate(){
+      NetworkTableEntry tv = table.getEntry("tv");
+      isThereTarget = tv.getDouble(0.0);
+      
+      if(isThereTarget>0.1){
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry ty = table.getEntry("ty");
         NetworkTableEntry ta = table.getEntry("ta");
-        NetworkTableEntry tv = table.getEntry("tv");
-    
+
         xAxis = tx.getDouble(0.0);
         yAxis = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
-        isThereTarget = tv.getDouble(0.0);
       }
+    }
 }
