@@ -51,6 +51,12 @@ public class Driver extends SubsystemBase {
   // left motors: max(yAxessValue, xAxessValue)
   
   public void d_control(double speed, double rotation){
-    this.diffDrive.arcadeDrive(speed, -rotation);//give it speeeeeeeeed
+    this.diffDrive.arcadeDrive(speed, -rotation);
+  }
+
+  // sets motors by voltage
+  public void driveVoltage(double rightVolatge, double leftVoltage){
+    this.m_leftLeader.setVoltage(leftVoltage);
+    this.m_rightLeader.setVoltage(rightVolatge);
   }
 }
