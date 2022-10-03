@@ -13,6 +13,7 @@ public class Limelight {
     private double yAxis;
     private double area;
     private double isThereTarget;
+    private double distance;
   
     public Limelight() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -30,6 +31,9 @@ public class Limelight {
         xAxis = tx.getDouble(0.0);
         yAxis = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
+
+        Double angleToGoal=(yAxis+Constants.LimelightConstants.LIMELIGHT_Y_ANGLE)*(3.14159 / 180.0);
+        distance=(Constants.LimelightConstants.TARGET_HEIGHT - Constants.LimelightConstants.LIMELIGHT_HEIGHT)/Math.tan(angleToGoal);
       }
     }
 }
