@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,14 @@ public class Shooter extends SubsystemBase {
 
   public void setSpeed(double speed){
     shooterMotor.set(speed);
+  }
+
+  public void setSpeedVelocity(double speedVelocity){
+    shooterMotor.set(ControlMode.Velocity, speedVelocity);
+  }
+
+  public double getShooterRPM(){
+    return ((shooterMotor.getSelectedSensorVelocity() * 10 * 60) / 2048);
   }
 
 }
