@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AccelerateShooter;
+import frc.robot.commands.ManualFeeder;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
@@ -47,8 +48,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     this.driverJoystick = new Joystick(0);
-    JoystickButton xButton = new JoystickButton(driverJoystick, XboxController.Button.kX.value);
-    xButton.whenHeld(new AccelerateShooter(shooter , 0.5));
+    JoystickButton bButton = new JoystickButton(driverJoystick, XboxController.Button.kB.value);
+    bButton.whenHeld(new AccelerateShooter(shooter , 0.5));
+
+    JoystickButton yButton = new JoystickButton(driverJoystick, XboxController.Button.kY.value);
+    yButton.whenHeld(new ManualFeeder(feeder, 0.5));
   }
 
   public void buildDefaultCommands() {

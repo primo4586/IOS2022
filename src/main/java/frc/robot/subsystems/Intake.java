@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.PneumaticConstants;
 
 public class Intake extends SubsystemBase {
 
@@ -24,8 +25,8 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     this.intakeMotor = new WPI_TalonSRX(Constants.IntakeConstants.INTAKE_MOTOR);
-    this.solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SELENOID_lEFT);
-    this.solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SELENOID_RIGHT);
+    this.solenoidLeft = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID_LEFT);
+    this.solenoidRight = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID_RIGHT);
 
   }
 

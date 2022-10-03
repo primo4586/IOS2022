@@ -7,37 +7,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 
-public class ManualFeeder extends CommandBase {
-  /** Creates a new ManualFeeder. */
+public class FeederSolChange extends CommandBase {
+  /** Creates a new FeederSolChange. */
   private Feeder feeder;
-  private double feederSpeed;
-  public ManualFeeder(Feeder feeder, double feederSpeed) {
+
+  public FeederSolChange(Feeder feeder) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(feeder);
     this.feeder = feeder;
-    this.feederSpeed = feederSpeed;
-
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    feeder.changeFeederSolenoidState();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    feeder.setFeederSpeed(feederSpeed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    feeder.setFeederSpeed(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -5,16 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 //  this command turn on motor on speed
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class ManualRoller extends CommandBase {
 
-  Intake intake;  //
-
-  
+  private Intake intake;  
 
   /** Creates a new ManualRoller. */
   public ManualRoller(Intake intake) {
@@ -33,7 +29,9 @@ public class ManualRoller extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
-   {intake.setIntakeSpeed(0.6);}
+  {
+     intake.setIntakeSpeed(0.6);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

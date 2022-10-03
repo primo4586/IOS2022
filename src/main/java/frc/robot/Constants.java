@@ -26,11 +26,17 @@ public final class Constants {
     
     public static final class FeederConstants {
         public static final int FEEDER_MOTOR_PORT = 6;
+        public static final int FEEDER_PORT = 0; 
     }
     
     public static final class IntakeConstants{
         public static final int INTAKE_MOTOR =8;
-        public static final int INTAKE_SELENOID_lEFT=9;
-        public static final int INTAKE_SELENOID_RIGHT=10;
+        public static final int INTAKE_SOLENOID_LEFT =9;
+        public static final int INTAKE_SOLENOID_RIGHT=10;
+    }
+
+    public static final class PneumaticConstants {
+        public static final int PCM_PORT = 8;
+
     }
 }
