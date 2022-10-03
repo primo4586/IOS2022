@@ -30,12 +30,17 @@ public class Robot extends TimedRobot {
   private Shooter shooter;
   private Driver driver;
 
+  private Limelight limelight;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+    this.limelight = new Limelight();
+    
+    
     this.climb = new Climb();
     this.feeder = new Feeder();
     this.shooter = new Shooter();
@@ -54,6 +59,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    limelight.tableUpdate();
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic

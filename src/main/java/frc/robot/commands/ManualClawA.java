@@ -5,33 +5,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climb;
 
-public class ManualSolenoid extends CommandBase {
-
-
-  private Intake intake;
-
-  /** Creates a new ManualSolenoid. */
-  public ManualSolenoid( Intake intake) {
+public class ManualClawA extends CommandBase {
+  /** Creates a new ManualClawA. */
+  private Climb climb;
+  private boolean state;
+  public ManualClawA(Climb climb) {
     // Use addRequirements() here to declare subsystem dependencies.
-
-    addRequirements(intake);
-
-    this.intake =intake;
-  
-    
+    addRequirements(climb);
+    this.climb=climb;
+    this.state=climb.getStateA();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    state= !state;
+    if(climb.isEnabled())
+      climb.changePClimbA(state);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    intake.toggleSolenoidState();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
