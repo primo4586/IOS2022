@@ -4,16 +4,19 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AccelerateShooter;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ManualFeeder;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Driver;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,18 +26,22 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
 
+  // subsystems setup
   private Climb climb;
   private Shooter shooter;
   private Feeder feeder;
+  private Driver driver;
 
   private Joystick driverJoystick;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter) {
+  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver) {
     this.climb = climb;
     this.shooter = shooter;
     this.feeder = feeder;
+    this.driver = driver;
 
+	this.driverJoystick = new Joystick(0);
     buildDefaultCommands();
     // Configure the button bindings
     configureButtonBindings();
@@ -47,7 +54,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    this.driverJoystick = new Joystick(0);
     JoystickButton bButton = new JoystickButton(driverJoystick, XboxController.Button.kB.value);
     bButton.whenHeld(new AccelerateShooter(shooter , 0.5));
 
@@ -58,6 +64,7 @@ public class RobotContainer {
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
     // TODO: Add joystick input to the command.
+    driver.setDefaultCommand(new ArcadeDrive(driver, () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value), () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value)));
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> 0));
   }
 
