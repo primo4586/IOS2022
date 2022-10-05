@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.DriveByTime;
+import frc.robot.commands.FeederSolChange;
 import frc.robot.subsystems.Driver;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -16,8 +17,8 @@ import frc.robot.subsystems.Shooter;
 /** Add your docs here. */
 public class OneBallAuto extends SequentialCommandGroup {
 
-    public OneBallAuto(Driver driver, Shooter shooter, Feeder feeder, Intake intake, double speed){
-        AccelerateShooter shootBall = new AccelerateShooter(shooter, speed);
+    public OneBallAuto(Driver driver, Shooter shooter, Feeder feeder, Intake intake){
+        AutoShooter shootBall = new AutoShooter(feeder, intake, shooter);
         DriveByTime driveBack = new DriveByTime(driver, 0.5, 0); // add time later
         addCommands(shootBall.withTimeout(7), driveBack);
     }

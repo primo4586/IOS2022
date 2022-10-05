@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Driver;
 
 /**
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   private Feeder feeder;
   private Shooter shooter;
   private Driver driver;
+  private Intake intake;
 
   private Limelight limelight;
 
@@ -45,9 +47,10 @@ public class Robot extends TimedRobot {
     this.feeder = new Feeder();
     this.shooter = new Shooter();
     this.driver = new Driver();
+    this.intake = new Intake();
     
     robotContainer = new RobotContainer(climb,feeder, shooter, driver);
-    autoContainer = new AutoContainer();
+    autoContainer = new AutoContainer(driver, shooter, feeder, intake);
   }
 
   /**

@@ -35,8 +35,10 @@ public class AutoShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    shooter.setSpeed(0.5); 
+    feeder.setFeederVolt(0.5); 
     if(shooter.getShooterRPM() == 3190){
-      feeder.changeFeederSolenoidState(); // solenoid is open ???
+      feeder.setFeederSolenoid(true);
     }
     
   }
