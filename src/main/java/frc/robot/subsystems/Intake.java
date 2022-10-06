@@ -16,8 +16,7 @@ public class Intake extends SubsystemBase {
 
 
   private WPI_TalonSRX intakeMotor;
-  private Solenoid solenoidLeft;
-  private Solenoid solenoidRight;
+  private Solenoid intakeJoint;
 
 
 
@@ -25,8 +24,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     this.intakeMotor = new WPI_TalonSRX(Constants.IntakeConstants.INTAKE_MOTOR);
-    this.solenoidLeft = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID_LEFT);
-    this.solenoidRight = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID_RIGHT);
+    this.intakeJoint = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID);
 
   }
 
@@ -39,17 +37,13 @@ public class Intake extends SubsystemBase {
 // changes solenoid state from F -> T or T->F
   public void toggleSolenoidState (){
     
-    solenoidLeft.set(!solenoidLeft.get());
-    solenoidRight.set(!solenoidRight.get());
-
+     intakeJoint.set(!intakeJoint.get());
 
   }
 
   public void setSolenoidState (boolean state){
     
-    solenoidLeft.set(state);
-    solenoidRight.set(state);
-
+    intakeJoint.set(state);
 
   }
 

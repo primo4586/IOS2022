@@ -27,7 +27,7 @@ public class Driver extends SubsystemBase {
     this.m_leftLeader = new WPI_TalonFX(Constants.DriverConstants.LEFT_LEADER_MOTOR_PORT);
     this.m_leftFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
     this.m_rightLeader = new WPI_TalonFX(Constants.DriverConstants.RIGHT_LEADER_MOTOR_PORT);
-    this.m_leftFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
+    this.m_rightFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
 
     // followers setup
     // follow by percent
