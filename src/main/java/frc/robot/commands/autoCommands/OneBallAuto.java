@@ -5,10 +5,6 @@
 package frc.robot.commands.autoCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.AccelerateShooter;
-import frc.robot.commands.DriveByTime;
-import frc.robot.commands.FeederSolChange;
 import frc.robot.subsystems.Driver;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
