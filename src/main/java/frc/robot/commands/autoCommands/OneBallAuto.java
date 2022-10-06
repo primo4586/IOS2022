@@ -15,7 +15,7 @@ public class OneBallAuto extends SequentialCommandGroup {
 
     public OneBallAuto(Driver driver, Shooter shooter, Feeder feeder, Intake intake){
         AutoShooter shootBall = new AutoShooter(feeder, intake, shooter);
-        DriveByTime driveBack = new DriveByTime(driver, 0.5, 0); // add time later
+        DriveByTime driveBack = new DriveByTime(driver, -0.5, 0); // add time later
         addCommands(shootBall.withTimeout(7), driveBack);
     }
 }

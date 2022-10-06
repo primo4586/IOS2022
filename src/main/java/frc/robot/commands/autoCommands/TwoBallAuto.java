@@ -18,8 +18,8 @@ public class TwoBallAuto extends SequentialCommandGroup {
 
     public TwoBallAuto(Driver driver, Shooter shooter, Feeder feeder, Intake intake){
         AutoShooter shootBall = new AutoShooter(feeder, intake, shooter);
-        ParallelRaceGroup takeBall = new ParallelRaceGroup(new OpenAndRotate(intake), new DriveByTime(driver, 0.5, 0)); // add time later
-        SequentialCommandGroup shootAgain = new SequentialCommandGroup(new DriveByTime(driver, -0.5, 0), new AutoShooter(feeder, intake, shooter)); // add time later
+        ParallelRaceGroup takeBall = new ParallelRaceGroup(new OpenAndRotate(intake), new DriveByTime(driver, -0.5, 0)); // add time later
+        SequentialCommandGroup shootAgain = new SequentialCommandGroup(new DriveByTime(driver, 0.5, 0), new AutoShooter(feeder, intake, shooter)); // add time later
         addCommands(shootBall, takeBall, shootAgain);
 }
     }
