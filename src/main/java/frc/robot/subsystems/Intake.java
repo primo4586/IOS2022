@@ -33,6 +33,9 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public boolean getSolanoidState(){
+    return intakeJoint.get();
+  }
 
 // changes solenoid state from F -> T or T->F
   public void toggleSolenoidState (){
