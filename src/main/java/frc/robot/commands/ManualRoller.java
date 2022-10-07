@@ -10,14 +10,15 @@ import frc.robot.subsystems.Intake;
 
 public class ManualRoller extends CommandBase {
 
-  private Intake intake;  
+  private Intake intake; 
+  private double speed; 
 
   /** Creates a new ManualRoller. */
-  public ManualRoller(Intake intake) {
+  public ManualRoller(Intake intake, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(intake);
-
+    this.speed=speed;
     this.intake = intake;
 
   }
@@ -30,12 +31,15 @@ public class ManualRoller extends CommandBase {
   @Override
   public void execute()
   {
-     intake.setIntakeSpeed(0.6);
+    if(intake.getSolanoidState())
+      intake.setIntakeSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.setIntakeSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override

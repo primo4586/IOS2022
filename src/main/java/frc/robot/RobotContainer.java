@@ -15,9 +15,11 @@ import frc.robot.commands.ManualClawB;
 import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ManualFeeder;
+import frc.robot.commands.ManualRoller;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Driver;
 
@@ -34,6 +36,7 @@ public class RobotContainer {
   private Shooter shooter;
   private Feeder feeder;
   private Driver driver;
+  private Intake intake;
 
   private Joystick driverJoystick;
   private Joystick o_joystick;
@@ -93,7 +96,8 @@ public class RobotContainer {
 
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
-    
+    intake.setDefaultCommand(new ManualRoller(intake, 0.6));
+    shooter.setDefaultCommand(new AccelerateShooter(shooter, 0.5));
     driver.setDefaultCommand(new ArcadeDrive(driver, () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value), () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value)));
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> o_joystick.getRawAxis(XboxController.Axis.kRightY.value)));
   }
