@@ -10,12 +10,12 @@ import frc.robot.subsystems.Feeder;
 public class ManualFeeder extends CommandBase {
   /** Creates a new ManualFeeder. */
   private Feeder feeder;
-  private double feederSpeed;
-  public ManualFeeder(Feeder feeder, double feederSpeed) {
+  private double feederVoltage;
+  public ManualFeeder(Feeder feeder, double feederVoltage) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(feeder);
     this.feeder = feeder;
-    this.feederSpeed = feederSpeed;
+    this.feederVoltage = feederVoltage;
 
   }
 
@@ -26,7 +26,7 @@ public class ManualFeeder extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    feeder.setFeederSpeed(feederSpeed);
+    feeder.setFeederVolt(feederVoltage);
   }
 
   // Called once the command ends or is interrupted.

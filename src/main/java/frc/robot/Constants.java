@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.PIDConfig;
+import frc.robot.util.PIDConfig;
 import vision.InterpolationMap;
 
 /**
@@ -42,6 +42,13 @@ public final class Constants {
         public static final int SHOOTER_MOTOR_PORT = 15;
         public static final PIDConfig SHOOTER_CONFIG = new PIDConfig(0.22, 0, 0.2, 0.055);
 
+        public static final double DEFAULT_CONSTANT_SPEED = 0.3;
+
+        /**  If vision is not working correctly, this is the RPM the shooter will use otherwise. */
+        public static final double FALLBACK_RPM = 3720.703125;
+
+        public static final double READY_RPM_TOLERANCE = 117.1875;
+
         public static final InterpolationMap SHOOTER_VISION_MAP = new InterpolationMap()
                 .put(1, 4130.859375)
                 .put(1.2, 4042.96875)
@@ -55,11 +62,13 @@ public final class Constants {
     public static final class FeederConstants {
         public static final int FEEDER_MOTOR_PORT = 6;
         public static final int FEEDER_PORT = 0;
+        public static final double FEEDER_VOLTAGE = 5;
     }
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR = 5;
         public static final int INTAKE_SOLENOID = 5;
+        public static final double ROLLER_VOLTAGE = 9.75; // 0.75 Percent Speed * 13;
     }
 
     public static final class PneumaticConstants {

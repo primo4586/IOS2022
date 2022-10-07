@@ -43,6 +43,10 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public void setVoltage(double voltage) {
+    intakeMotor.setVoltage(voltage);
+  }
+
   public void setSolenoidState (boolean state){
     
     intakeJoint.set(state);

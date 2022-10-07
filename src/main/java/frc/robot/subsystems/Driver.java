@@ -19,6 +19,8 @@ public class Driver extends SubsystemBase {
     private WPI_TalonFX m_rightLeader;
     private WPI_TalonFX m_rightFollower;
 
+    private boolean forward;
+
     // for motors to work together
     private DifferentialDrive diffDrive;
 
@@ -46,6 +48,7 @@ public class Driver extends SubsystemBase {
 
     //creates new diffrentialDrive
     this.diffDrive = new DifferentialDrive(m_leftLeader, m_rightLeader);
+    this.forward = true;
   }
 
   @Override
@@ -60,6 +63,10 @@ public class Driver extends SubsystemBase {
   // left motors: max(yAxessValue, xAxessValue)
   
   public void d_control(double speed, double rotation){
+
+    if(!forward)
+      speed *= -1;
+
     this.diffDrive.arcadeDrive(speed, -rotation);
   }
 
@@ -68,4 +75,14 @@ public class Driver extends SubsystemBase {
     this.m_leftLeader.setVoltage(leftVoltage);
     this.m_rightLeader.setVoltage(rightVolatge);
   }
+
+  public void setForward(boolean forward) {
+    this.forward = forward;
+  }
+
+  public boolean isForward() {
+      return forward;
+  }
+
+  
 }

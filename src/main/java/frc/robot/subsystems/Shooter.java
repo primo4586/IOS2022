@@ -11,8 +11,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.PIDConfig;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.util.PIDConfig;
 
 public class Shooter extends SubsystemBase {
   private WPI_TalonFX shooterMotor;
@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isRPMinRange(double targetRPM) {
-    return Math.abs(targetRPM - getShooterRPM()) <= 117;
+    return Math.abs(targetRPM - getShooterRPM()) <= ShooterConstants.READY_RPM_TOLERANCE;
   }
 
 

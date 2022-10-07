@@ -11,14 +11,14 @@ import frc.robot.subsystems.Intake;
 public class ManualRoller extends CommandBase {
 
   private Intake intake; 
-  private double speed; 
+  private double voltage; 
 
   /** Creates a new ManualRoller. */
-  public ManualRoller(Intake intake, double speed) {
+  public ManualRoller(Intake intake, double voltage) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(intake);
-    this.speed=speed;
+    this.voltage=voltage;
     this.intake = intake;
 
   }
@@ -32,7 +32,7 @@ public class ManualRoller extends CommandBase {
   public void execute()
   {
     if(intake.getSolanoidState())
-      intake.setIntakeSpeed(speed);
+      intake.setVoltage(voltage);
     else
       intake.setIntakeSpeed(0);
   }

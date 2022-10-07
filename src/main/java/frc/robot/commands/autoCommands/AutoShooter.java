@@ -42,6 +42,7 @@ public class AutoShooter extends CommandBase {
   public void execute() {
     feeder.setFeederVolt(5); 
     shooter.setSpeedVelocity(setpointSupplier.getAsDouble());
+    
     if(shooter.isRPMinRange(setpointSupplier.getAsDouble())){
       feeder.setFeederSolenoid(true);
     }
