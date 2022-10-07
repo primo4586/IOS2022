@@ -67,6 +67,8 @@ public class RobotContainer {
     // Configure the button bindings
     buildButtons();
     configureButtonBindings();
+
+    buildCameras();
   }
 
   private void buildButtons(){

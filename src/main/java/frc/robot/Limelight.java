@@ -38,16 +38,10 @@ public class Limelight {
     }
 
     public boolean getIsThereTarget() {
-      if (isThereTarget == 1){
-        return true;
-      }
-      return false;
+      return (isThereTarget == 1);
     }
 
     public boolean isDistanceInRange(){
-      if (distance < 2.2 && distance > 1.1) {
-        return true;
-      }
-      return false;
+      return (distance < 2.2 && distance > 1.1);
     }
 }

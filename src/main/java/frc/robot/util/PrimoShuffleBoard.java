@@ -28,7 +28,7 @@ public class PrimoShuffleBoard {
     private double timeSaved;
     private boolean timeStateSaved;
 
-    public void primoShuffleBoard() {
+    public PrimoShuffleBoard() {
         tab = Shuffleboard.getTab("Compatition shuffle board");
         feederSolenoidState = tab.add("Feeder Solenoid State", 0).getEntry();
         matchTime = tab.add("Time left",0).getEntry();
