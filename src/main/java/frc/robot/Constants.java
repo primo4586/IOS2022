@@ -48,7 +48,7 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR = 8;
+        public static final int INTAKE_MOTOR = 5;
         public static final int INTAKE_SOLENOID = 5;
     }
 

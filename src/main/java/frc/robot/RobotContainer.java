@@ -17,6 +17,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ManualFeeder;
 import frc.robot.commands.ManualRoller;
 import frc.robot.commands.ManualRotateChain;
+import frc.robot.commands.ManualSolenoid;
 import frc.robot.commands.TuneShooter;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
@@ -48,12 +49,14 @@ public class RobotContainer {
   private JoystickButton X_Operator; // Release level 3
   private JoystickButton RB_Operator; // Manual Control A side (2&4)
   private JoystickButton LB_Operator; // Manual Control B side (3)
+  private JoystickButton LB_Driver;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver) {
+  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver, Intake intake) {
     this.climb = climb;
     this.shooter = shooter;
     this.feeder = feeder;
+    this.intake = intake;
     this.driver = driver;
 
 	  this.driverJoystick = new Joystick(0);
@@ -72,6 +75,7 @@ public class RobotContainer {
     this.X_Operator = new JoystickButton(o_joystick, XboxController.Button.kX.value);
     this.RB_Operator = new JoystickButton(o_joystick, XboxController.Button.kRightBumper.value);
     this.LB_Operator = new JoystickButton(o_joystick, XboxController.Button.kLeftBumper.value);
+    this.LB_Driver = new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value);
   }
 
   /**
@@ -88,6 +92,7 @@ public class RobotContainer {
     JoystickButton yButton = new JoystickButton(driverJoystick, XboxController.Button.kY.value);
     yButton.whenHeld(new ManualFeeder(feeder, 0.5));
 
+    LB_Driver.whenPressed(new ManualSolenoid(intake));
   	START_Operator.whenPressed(new InstantCommand(() -> climb.setEnabled(), climb));
     RB_Operator.whenPressed(new ManualClawA(climb));
     LB_Operator.whenPressed(new ManualClawB(climb));
@@ -99,7 +104,7 @@ public class RobotContainer {
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
     intake.setDefaultCommand(new ManualRoller(intake, 0.6));
-    shooter.setDefaultCommand(new AccelerateShooter(shooter, 0.5));
+    // shooter.setDefaultCommand(new AccelerateShooter(shooter, 0.5));
     driver.setDefaultCommand(new ArcadeDrive(driver, () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value), () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value)));
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> o_joystick.getRawAxis(XboxController.Axis.kRightY.value)));
   }

@@ -33,12 +33,13 @@ public class ManualRoller extends CommandBase {
   {
     if(intake.getSolanoidState())
       intake.setIntakeSpeed(speed);
+    else
+      intake.setIntakeSpeed(0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setIntakeSpeed(0);
   }
 
   // Returns true when the command should end.

@@ -25,12 +25,13 @@ public class ManualSolenoid extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize(){
+    intake.setSolenoidState(!intake.getSolanoidState());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.toggleSolenoidState();
   }
 
   // Called once the command ends or is interrupted.
