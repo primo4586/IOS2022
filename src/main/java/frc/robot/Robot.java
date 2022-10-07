@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
     this.driver = new Driver();
     this.intake = new Intake();
     
-    robotContainer = new RobotContainer(climb,feeder, shooter, driver, intake);
+    robotContainer = new RobotContainer(climb,feeder, shooter, driver, intake, limelight);
     autoContainer = new AutoContainer(driver, shooter, feeder, intake);
   }
 

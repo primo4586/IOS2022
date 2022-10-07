@@ -6,6 +6,9 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.Constants.LimelightConstants;
 /** Add your docs here. */
 public class Limelight {
     private NetworkTable table;
@@ -15,8 +18,16 @@ public class Limelight {
     private double isThereTarget;
     private double distance;
   
+    private ShuffleboardTab debugTab;
+    private NetworkTableEntry distanceEntry, angleXEntry, angleYEntry;
+
     public Limelight() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
+    debugTab = Shuffleboard.getTab("Vision debug");
+    distanceEntry = debugTab.add("Distance", 0).getEntry();
+    angleXEntry = debugTab.add("Angle X", 0).getEntry();
+    angleYEntry = debugTab.add("Angle Y", 0).getEntry();
+
     }
     
     public void tableUpdate(){
@@ -32,8 +43,19 @@ public class Limelight {
         yAxis = ty.getDouble(0.0);
         area = ta.getDouble(0.0);
 
-        Double angleToGoal=(yAxis+Constants.LimelightConstants.LIMELIGHT_Y_ANGLE)*(3.14159 / 180.0);
+        Double angleToGoal=(yAxis+Constants.LimelightConstants.LIMELIGHT_Y_ANGLE)*(Math.PI / 180.0);
         distance=(Constants.LimelightConstants.TARGET_HEIGHT - Constants.LimelightConstants.LIMELIGHT_HEIGHT)/Math.tan(angleToGoal);
+        distanceEntry.setNumber(distance);
+        angleXEntry.setNumber(xAxis);
+        angleYEntry.setNumber(yAxis);
       }
+
     }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    
+
 }

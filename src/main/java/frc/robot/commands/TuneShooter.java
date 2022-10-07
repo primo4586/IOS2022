@@ -8,8 +8,11 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Limelight;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
+import vision.InterpolateUtil;
 
 public class TuneShooter extends CommandBase {
   /** Creates a new TuneShooter. */
@@ -17,14 +20,16 @@ public class TuneShooter extends CommandBase {
   private Shooter shooter;
   private Feeder feeder;
   private ShuffleboardTab tab;
-  private NetworkTableEntry speed, setpoint;
+  private NetworkTableEntry speedEntry, setpoint;
+  private Limelight limelight;
 
-  public TuneShooter(Shooter shooter, Feeder feeder) {
+  public TuneShooter(Shooter shooter, Feeder feeder, Limelight limelight) {
 
     tab = Shuffleboard.getTab("ShooterTune");
-    speed = tab.add("Speed", 0).getEntry();
+    speedEntry = tab.add("Speed", 0).getEntry();
     setpoint = tab.add("setpoint", 0).getEntry();
     this.shooter = shooter;
+    this.limelight = limelight;
     this.feeder = feeder;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -40,9 +45,12 @@ public class TuneShooter extends CommandBase {
   @Override
   public void execute() {
 
+    double speed = InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance());
+
     feeder.setFeederVolt(5);
-    shooter.setSpeedVelocity(setpoint.getDouble(0));
-    speed.setNumber(shooter.getShooterRPM());
+    shooter.setSpeedVelocity(speed);
+    setpoint.setNumber(speed);
+    speedEntry.setNumber(shooter.getShooterRPM());
   }
 
   // Called once the command ends or is interrupted.

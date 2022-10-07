@@ -25,7 +25,6 @@ public class Intake extends SubsystemBase {
 
     this.intakeMotor = new WPI_TalonSRX(Constants.IntakeConstants.INTAKE_MOTOR);
     this.intakeJoint = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.INTAKE_SOLENOID);
-
   }
 
   @Override

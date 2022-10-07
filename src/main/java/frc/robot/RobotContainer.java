@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ManualClawA;
 import frc.robot.commands.ManualClawB;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ManualFeeder;
@@ -19,10 +20,12 @@ import frc.robot.commands.ManualRoller;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.commands.ManualSolenoid;
 import frc.robot.commands.TuneShooter;
+import frc.robot.commands.autoCommands.AutoShooter;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import vision.InterpolateUtil;
 import frc.robot.subsystems.Driver;
 
 /**
@@ -40,6 +43,8 @@ public class RobotContainer {
   private Driver driver;
   private Intake intake;
 
+  private Limelight limelight;
+
   private Joystick driverJoystick;
   private Joystick o_joystick;
   
@@ -52,11 +57,12 @@ public class RobotContainer {
   private JoystickButton LB_Driver;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver, Intake intake) {
+  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver, Intake intake, Limelight limelight) {
     this.climb = climb;
     this.shooter = shooter;
     this.feeder = feeder;
     this.intake = intake;
+    this.limelight = limelight;
     this.driver = driver;
 
 	  this.driverJoystick = new Joystick(0);
@@ -86,8 +92,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton bButton = new JoystickButton(driverJoystick, XboxController.Button.kB.value);
-    bButton.whenHeld(new AccelerateShooter(shooter , 0.5));
-    // bButton.whenHeld(new TuneShooter(shooter, feeder));
+    // bButton.whenHeld(new AccelerateShooter(shooter , 0.5));
+    // bButton.whenHeld(new TuneShooter(shooter, feeder, limelight));
+    bButton.whenHeld(new AutoShooter(feeder, intake, shooter, () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance())));
 
     JoystickButton yButton = new JoystickButton(driverJoystick, XboxController.Button.kY.value);
     yButton.whenHeld(new ManualFeeder(feeder, 0.5));
@@ -103,7 +110,7 @@ public class RobotContainer {
 
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
-    intake.setDefaultCommand(new ManualRoller(intake, 0.6));
+    intake.setDefaultCommand(new ManualRoller(intake, 0.75));
     // shooter.setDefaultCommand(new AccelerateShooter(shooter, 0.5));
     driver.setDefaultCommand(new ArcadeDrive(driver, () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value), () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value)));
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> o_joystick.getRawAxis(XboxController.Axis.kRightY.value)));

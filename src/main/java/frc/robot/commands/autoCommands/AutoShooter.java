@@ -4,6 +4,8 @@
 
 package frc.robot.commands.autoCommands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -13,15 +15,18 @@ public class AutoShooter extends CommandBase {
   private Feeder feeder;
   private Intake intake;
   private Shooter shooter;
+  private DoubleSupplier setpointSupplier;
   /** Creates a new AutoShooter. */
-  public AutoShooter(Feeder feeder, Intake intake, Shooter shooter) {
+  public AutoShooter(Feeder feeder, Intake intake, Shooter shooter, DoubleSupplier setpointSupplier) {
     this.feeder = feeder;
     this.intake = intake;
     this.shooter = shooter;
+    this.setpointSupplier = setpointSupplier;
 
     addRequirements(this.feeder);
     addRequirements(this.intake);
     addRequirements(this.shooter);
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,15 +34,15 @@ public class AutoShooter extends CommandBase {
   @Override
   public void initialize() {
     shooter.setSpeed(0.5); 
-    feeder.setFeederVolt(0.5); 
+    feeder.setFeederVolt(5); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setSpeed(0.5); 
-    feeder.setFeederVolt(0.5); 
-    if(shooter.getShooterRPM() == 3190){
+    feeder.setFeederVolt(5); 
+    shooter.setSpeedVelocity(setpointSupplier.getAsDouble());
+    if(shooter.isRPMinRange(setpointSupplier.getAsDouble())){
       feeder.setFeederSolenoid(true);
     }
     
@@ -48,7 +53,8 @@ public class AutoShooter extends CommandBase {
   public void end(boolean interrupted) {
     shooter.setSpeed(0);
     feeder.setFeederVolt(0);
-    feeder.changeFeederSolenoidState();
+    feeder.setFeederSolenoid(false);
+
   }
 
   // Returns true when the command should end.

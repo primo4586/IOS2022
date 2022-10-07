@@ -29,11 +29,11 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double speed){
+  public void setSpeed(double speed) {
     shooterMotor.set(speed);
   }
 
-  public void setSpeedVelocity(double speedVelocity){
+  public void setSpeedVelocity(double speedVelocity) {
     this.shooterMotor.set(ControlMode.Velocity, (speedVelocity / 600) * 2048);
   }
 
@@ -44,9 +44,13 @@ public class Shooter extends SubsystemBase {
     this.shooterMotor.config_kF(0, config.getKf());
   }
 
+  public boolean isRPMinRange(double targetRPM) {
+    return Math.abs(targetRPM - getShooterRPM()) <= 117;
+  }
 
 
-  public double getShooterRPM(){
+
+  public double getShooterRPM() {
     return ((shooterMotor.getSelectedSensorVelocity() * 10 * 60) / 2048);
   }
 

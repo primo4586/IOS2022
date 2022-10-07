@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.PIDConfig;
+import vision.InterpolationMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -33,13 +34,22 @@ public final class Constants {
     public static final class LimelightConstants {
         public static final double LIMELIGHT_Y_ANGLE = 40;
 
-        public static final double LIMELIGHT_HEIGHT = 0.70;
-        public static final double TARGET_HEIGHT = 2.59;
+        public static final double LIMELIGHT_HEIGHT = 0.73;
+        public static final double TARGET_HEIGHT = 2.50;
     }
 
     public static final class ShooterConstants {
         public static final int SHOOTER_MOTOR_PORT = 15;
         public static final PIDConfig SHOOTER_CONFIG = new PIDConfig(0.22, 0, 0.2, 0.055);
+
+        public static final InterpolationMap SHOOTER_VISION_MAP = new InterpolationMap()
+                .put(1, 4130.859375)
+                .put(1.2, 4042.96875)
+                .put(1.4, 3750)
+                .put(1.6, 3750)
+                .put(1.8, 3779.296875)
+                .put(2, 3867.1875)
+                .put(2.1, 3896.484375);
     }
 
     public static final class FeederConstants {
