@@ -16,6 +16,7 @@ import frc.robot.commands.AccelerateShooter;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ManualFeeder;
 import frc.robot.commands.ManualRotateChain;
+import frc.robot.commands.TuneShooter;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
@@ -79,6 +80,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     JoystickButton bButton = new JoystickButton(driverJoystick, XboxController.Button.kB.value);
     bButton.whenHeld(new AccelerateShooter(shooter , 0.5));
+    // bButton.whenHeld(new TuneShooter(shooter, feeder));
 
     JoystickButton yButton = new JoystickButton(driverJoystick, XboxController.Button.kY.value);
     yButton.whenHeld(new ManualFeeder(feeder, 0.5));

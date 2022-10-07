@@ -5,10 +5,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.PIDConfig;
+import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   private WPI_TalonFX shooterMotor;
@@ -16,6 +20,8 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   public Shooter() {
     this.shooterMotor = new WPI_TalonFX(Constants.ShooterConstants.SHOOTER_MOTOR_PORT);
+    this.shooterMotor.setInverted(true);
+    setConfig(ShooterConstants.SHOOTER_CONFIG);
   }
 
   @Override
@@ -28,8 +34,17 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeedVelocity(double speedVelocity){
-    shooterMotor.set(ControlMode.Velocity, speedVelocity);
+    this.shooterMotor.set(ControlMode.Velocity, (speedVelocity / 600) * 2048);
   }
+
+  public void setConfig(PIDConfig config) {
+    this.shooterMotor.config_kP(0, config.getKp());
+    this.shooterMotor.config_kI(0, config.getKi());
+    this.shooterMotor.config_kD(0, config.getKd());
+    this.shooterMotor.config_kF(0, config.getKf());
+  }
+
+
 
   public double getShooterRPM(){
     return ((shooterMotor.getSelectedSensorVelocity() * 10 * 60) / 2048);
