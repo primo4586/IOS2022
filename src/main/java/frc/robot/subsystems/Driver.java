@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -28,6 +29,15 @@ public class Driver extends SubsystemBase {
     this.m_leftFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
     this.m_rightLeader = new WPI_TalonFX(Constants.DriverConstants.RIGHT_LEADER_MOTOR_PORT);
     this.m_rightFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
+
+
+    this.m_leftLeader.setNeutralMode(NeutralMode.Brake);
+    this.m_rightLeader.setNeutralMode(NeutralMode.Brake);
+    this.m_rightFollower.setNeutralMode(NeutralMode.Brake);
+    this.m_leftFollower.setNeutralMode(NeutralMode.Brake);
+
+    this.m_leftLeader.setInverted(true);
+    this.m_leftFollower.setInverted(true);
 
     // followers setup
     // follow by percent
