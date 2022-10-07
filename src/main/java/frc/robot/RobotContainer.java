@@ -20,6 +20,9 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Driver;
+import edu.wpi.first.cscore.UsbCamera;
+import frc.robot.util.CameraHandler;
+import edu.wpi.first.cameraserver.CameraServer;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -44,6 +47,10 @@ public class RobotContainer {
   private JoystickButton X_Operator; // Release level 3
   private JoystickButton RB_Operator; // Manual Control A side (2&4)
   private JoystickButton LB_Operator; // Manual Control B side (3)
+
+  private UsbCamera forward;
+  private UsbCamera backward;
+  private CameraHandler camHandler;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver) {
@@ -98,5 +105,11 @@ public class RobotContainer {
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> o_joystick.getRawAxis(XboxController.Axis.kRightY.value)));
   }
 
+  private void buildCameras() {
+    this.forward = CameraServer.startAutomaticCapture("Forward", 0);
+    this.backward = CameraServer.startAutomaticCapture("Backward", 1);
 
+    this.camHandler = new CameraHandler(forward, backward);
+  }
 }
+

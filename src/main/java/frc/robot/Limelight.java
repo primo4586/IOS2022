@@ -36,4 +36,18 @@ public class Limelight {
         distance=(Constants.LimelightConstants.TARGET_HEIGHT - Constants.LimelightConstants.LIMELIGHT_HEIGHT)/Math.tan(angleToGoal);
       }
     }
+
+    public boolean getIsThereTarget() {
+      if (isThereTarget == 1){
+        return true;
+      }
+      return false;
+    }
+
+    public boolean isDistanceInRange(){
+      if (distance < 2.2 && distance > 1.1) {
+        return true;
+      }
+      return false;
+    }
 }

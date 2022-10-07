@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Shooter;
+import frc.robot.util.PrimoShuffleBoard;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Driver;
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
 
   private Limelight limelight;
 
+  private PrimoShuffleBoard primoShuffleBoard;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -51,6 +54,8 @@ public class Robot extends TimedRobot {
     
     robotContainer = new RobotContainer(climb,feeder, shooter, driver);
     autoContainer = new AutoContainer(driver, shooter, feeder, intake);
+
+    this.primoShuffleBoard = new PrimoShuffleBoard();
   }
 
   /**
@@ -68,6 +73,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    primoShuffleBoard.updateCompShuffleBoard(feeder, limelight, climb);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
