@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer(climb,feeder, shooter, driver, intake, limelight);
     autoContainer = new AutoContainer(driver, shooter, feeder, intake);
 
+    LiveWindow.disableAllTelemetry();
     this.primoShuffleBoard = new PrimoShuffleBoard();
   }
 

@@ -3,10 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.DriverConstants;
 import frc.robot.subsystems.Driver;
 
 public class ArcadeDrive extends CommandBase {
@@ -15,12 +17,16 @@ public class ArcadeDrive extends CommandBase {
   private double rotationAsDouble;
   private DoubleSupplier speed;
   private DoubleSupplier rotation;
+  private BooleanSupplier isBoosting;
+  private BooleanSupplier isSlowing;
 
   /** Creates a new ArcadeDrive. */
-  public ArcadeDrive(Driver driver, DoubleSupplier speed, DoubleSupplier rotation ) {
+  public ArcadeDrive(Driver driver, DoubleSupplier speed, DoubleSupplier rotation, BooleanSupplier isBoosting, BooleanSupplier isSlowing) {
     this.driver = driver;
     this.speed = speed;
     this.rotation = rotation;
+    this.isBoosting = isBoosting;
+    this.isSlowing = isSlowing;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driver);
   }
@@ -35,7 +41,14 @@ public class ArcadeDrive extends CommandBase {
   public void execute() {
     this.speedAsDouble = this.speed.getAsDouble() * Constants.DriverConstants.SPEED_LIMITER;
     this.rotationAsDouble = this.rotation.getAsDouble() * Constants.DriverConstants.ROTATION_LIMITER;
+
+    if(isBoosting.getAsBoolean())
+        this.speedAsDouble *= DriverConstants.BOOST_MULTIPLIER;
+    else if(isSlowing.getAsBoolean())
+        this.speedAsDouble *= DriverConstants.SLOW_MULTIPLIER;    
+
     driver.d_control(this.speedAsDouble ,this.rotationAsDouble);
+
   }
 
   // Called once the command ends or is interrupted.

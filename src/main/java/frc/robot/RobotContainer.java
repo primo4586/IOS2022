@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ManualClawA;
@@ -24,6 +26,7 @@ import frc.robot.commands.ManualRoller;
 import frc.robot.commands.ManualRotateChain;
 import frc.robot.commands.ManualSolenoid;
 import frc.robot.commands.RumbleJoystick;
+import frc.robot.commands.SpinOutBalls;
 import frc.robot.commands.TuneShooter;
 import frc.robot.commands.autoCommands.AutoShooter;
 import frc.robot.subsystems.Climb;
@@ -132,16 +135,15 @@ public class RobotContainer {
 
     // Shooter Control
     // Manual Control with static setpoint
-    B_Driver.whenHeld(new AutoShooter(feeder, intake, shooter, () -> ShooterConstants.FALLBACK_RPM));
+    LT_TRIGGER_Driver.whileActiveOnce(new AutoShooter(feeder, intake, shooter, () -> ShooterConstants.FALLBACK_RPM));
 
     // Using vision data for shooting
-    LT_TRIGGER_Driver.whileActiveOnce(
+    B_Driver.whenHeld(
               new SequentialCommandGroup(rumble.until(() -> limelight.getIsThereTarget() && limelight.isDistanceInRange()), 
               new AutoShooter(feeder, intake, shooter, () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance()))));
 
     // Manual Feeder Control
-    Y_Driver.whenHeld(new ManualFeeder(feeder, FeederConstants.FEEDER_VOLTAGE));
-
+    X_Driver.whenHeld(new SpinOutBalls(feeder, -FeederConstants.FEEDER_VOLTAGE));
     // Intake control
     Y_Driver.whileHeld(new ManualRoller(intake, -IntakeConstants.ROLLER_VOLTAGE)); // outaking "plita" (spinning roller in reverse)
     LB_Driver.whenPressed(new ManualSolenoid(intake)); // Toggles open/closes the intake, also toggles the roller 
@@ -158,8 +160,12 @@ public class RobotContainer {
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
     intake.setDefaultCommand(new ManualRoller(intake, IntakeConstants.ROLLER_VOLTAGE));
-    shooter.setDefaultCommand(new AccelerateShooter(shooter, ShooterConstants.DEFAULT_CONSTANT_SPEED));
-    driver.setDefaultCommand(new ArcadeDrive(driver, () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value), () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value)));
+    // shooter.setDefaultCommand(new AccelerateShooter(shooter, ShooterConstants.DEFAULT_CONSTANT_SPEED));
+    driver.setDefaultCommand(new ArcadeDrive(driver,
+         () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value),
+         () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value),
+         () -> driverJoystick.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.3,
+         () -> false));
     climb.setDefaultCommand(new ManualRotateChain(climb, () -> operatorJoystick.getRawAxis(XboxController.Axis.kRightY.value)));
   }
 

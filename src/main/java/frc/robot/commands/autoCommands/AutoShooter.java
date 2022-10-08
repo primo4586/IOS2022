@@ -6,6 +6,10 @@ package frc.robot.commands.autoCommands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
@@ -16,12 +20,17 @@ public class AutoShooter extends CommandBase {
   private Intake intake;
   private Shooter shooter;
   private DoubleSupplier setpointSupplier;
+  private double inRangeTime = 0;
+
+  private ShuffleboardTab tab;
+  private NetworkTableEntry speed, setpoint, reachedSetpoint;
   /** Creates a new AutoShooter. */
   public AutoShooter(Feeder feeder, Intake intake, Shooter shooter, DoubleSupplier setpointSupplier) {
     this.feeder = feeder;
     this.intake = intake;
     this.shooter = shooter;
     this.setpointSupplier = setpointSupplier;
+
 
     addRequirements(this.feeder);
     addRequirements(this.intake);
@@ -33,8 +42,11 @@ public class AutoShooter extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.inRangeTime = 100000000;
     shooter.setSpeed(0.5); 
-    feeder.setFeederVolt(5); 
+    feeder.setFeederVolt(6);
+    intake.setIntakeSpeed(0.3);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,9 +55,19 @@ public class AutoShooter extends CommandBase {
     feeder.setFeederVolt(5); 
     shooter.setSpeedVelocity(setpointSupplier.getAsDouble());
     
-    if(shooter.isRPMinRange(setpointSupplier.getAsDouble())){
-      feeder.setFeederSolenoid(true);
+    System.out.println("Shooter Reported RPM: " + shooter.getShooterRPM());
+    System.out.println("Setpoint RPM: " + setpointSupplier.getAsDouble());
+    System.out.println("Difference: " + (setpointSupplier.getAsDouble() - shooter.getShooterRPM()));
+    System.out.println("-----------------------------------");
+    if(shooter.isRPMinRange(setpointSupplier.getAsDouble()) && inRangeTime == 100000000){
+      System.out.println("Reached setpoint");
+      feeder.setFeederSolenoid(true);  
+      // inRangeTime = Timer.getFPGATimestamp();
     }
+    // if(Timer.getFPGATimestamp() >= inRangeTime + 1 && inRangeTime != 100000000) {
+    //   System.out.println("Feeder open");
+           
+    // }
     
   }
 
@@ -55,6 +77,7 @@ public class AutoShooter extends CommandBase {
     shooter.setSpeed(0);
     feeder.setFeederVolt(0);
     feeder.setFeederSolenoid(false);
+    intake.setIntakeSpeed(0);
 
   }
 

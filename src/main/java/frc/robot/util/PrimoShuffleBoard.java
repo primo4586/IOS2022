@@ -30,12 +30,12 @@ public class PrimoShuffleBoard {
 
     public PrimoShuffleBoard() {
         tab = Shuffleboard.getTab("Competiton Dashboard");
-        feederSolenoidState = tab.add("Feeder Solenoid State", 0).getEntry();
+        feederSolenoidState = tab.add("Feeder Solenoid State", false).getEntry();
         matchTime = tab.add("Time left",0).getEntry();
-        matchTimeState = tab.add("Time left warning",0).getEntry();
-        isTargetInLL = tab.add("Is the target in Limelight range",0).getEntry();
-        isInShootingRange = tab.add("Is in shooting range",0).getEntry();
-        isClimbEnabled = tab.add("Is climb enabled", 0).getEntry();
+        matchTimeState = tab.add("Time left warning",true).getEntry();
+        isTargetInLL = tab.add("Is the target in Limelight range",false).getEntry();
+        isInShootingRange = tab.add("Is in shooting range",false).getEntry();
+        isClimbEnabled = tab.add("Is climb enabled", false).getEntry();
         
         timeSaved = 0;
         timeStateSaved = false;

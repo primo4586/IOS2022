@@ -30,7 +30,7 @@ public class Driver extends SubsystemBase {
     this.m_leftLeader = new WPI_TalonFX(Constants.DriverConstants.LEFT_LEADER_MOTOR_PORT);
     this.m_leftFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
     this.m_rightLeader = new WPI_TalonFX(Constants.DriverConstants.RIGHT_LEADER_MOTOR_PORT);
-    this.m_rightFollower = new WPI_TalonFX(Constants.DriverConstants.LEFT_FOLLOWER_MOTOR_PORT);
+    this.m_rightFollower = new WPI_TalonFX(Constants.DriverConstants.RIGHT_FOLLOWER_MOTOR_PORT);
 
 
     this.m_leftLeader.setNeutralMode(NeutralMode.Brake);
@@ -67,7 +67,19 @@ public class Driver extends SubsystemBase {
     if(!forward)
       speed *= -1;
 
-    this.diffDrive.arcadeDrive(speed, -rotation);
+    this.diffDrive.arcadeDrive(speed,-rotation);
+  }
+
+  public void driveLeft(double voltage) {
+    this.m_leftLeader.setVoltage(voltage);
+    this.m_leftFollower.setVoltage(voltage);
+    this.diffDrive.feed();
+  }
+
+  public void driveRight(double voltage) {
+    this.m_rightLeader.setVoltage(voltage);
+    this.m_rightFollower.setVoltage(voltage);
+    this.diffDrive.feed();
   }
 
   // sets motors by voltage

@@ -54,7 +54,7 @@ public final class Constants {
                 .put(1.2, 4042.96875)
                 .put(1.4, 3750)
                 .put(1.6, 3750)
-                .put(1.8, 3779.296875)
+                .put(1.8, 3800.296875)
                 .put(2, 3867.1875)
                 .put(2.1, 3896.484375);
     }
@@ -88,6 +88,9 @@ public final class Constants {
         // arcadeDrive limiters
         public static final double SPEED_LIMITER = 0.6;
         public static final double ROTATION_LIMITER = 0.6;
+
+        public static final double BOOST_MULTIPLIER = 1.2;
+        public static final double SLOW_MULTIPLIER = 0.7;
 
     }
 }
