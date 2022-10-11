@@ -12,14 +12,14 @@ import frc.robot.Constants.PneumaticConstants;
 public class Climb extends SubsystemBase {
 
   private Solenoid solenoidA;
-  private Solenoid solenoidB; 
+  private Solenoid solenoidB;
 
-  private boolean aSideState; 
+  private boolean aSideState;
   private boolean bSideState;
 
   private WPI_TalonFX m_climbRight;
   private WPI_TalonFX m_climbleft;
-  
+
   private boolean enabled = false;
 
   public Climb() {
@@ -29,45 +29,47 @@ public class Climb extends SubsystemBase {
     this.m_climbleft.setInverted(true);
 
     this.solenoidA = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM,
-    Constants.ClimbConstants.CLIMB_SOLENOID_A);
-        
+        Constants.ClimbConstants.CLIMB_SOLENOID_A);
+
     this.solenoidB = new Solenoid(PneumaticConstants.PCM_PORT, PneumaticsModuleType.CTREPCM,
-    Constants.ClimbConstants.CLIMB_SOLENOID_B);
+        Constants.ClimbConstants.CLIMB_SOLENOID_B);
 
     this.enabled = false;
     this.aSideState = true;
     this.bSideState = true;
   }
 
-  public void changePClimbA(boolean state){
-    this.aSideState= state;
+  public void changePClimbA(boolean state) {
+    this.aSideState = state;
     this.solenoidA.set(state);
   }
 
-  public void changePClimbB(boolean state){
-    this.bSideState= state;
+  public void changePClimbB(boolean state) {
+    this.bSideState = state;
     this.solenoidB.set(state);
   }
 
-  public boolean getStateA(){
+  public boolean getStateA() {
     return this.aSideState;
   }
 
-  public boolean getStateB(){
+  public boolean getStateB() {
     return this.bSideState;
   }
 
-  public void setVoltage(double voltage){
+  public void setVoltage(double voltage) {
     m_climbRight.setVoltage(voltage);
     m_climbleft.setVoltage(voltage);
   }
 
   public boolean isEnabled() {
-      return enabled;
+    return enabled;
   }
 
-  public void setEnabled( ) {
-    this.enabled=true;
+  public void enableClimb() {
+    this.changePClimbA(false);
+    this.changePClimbB(false);
+    this.enabled = true;
   }
 
 }

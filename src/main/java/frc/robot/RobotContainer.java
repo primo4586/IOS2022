@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -40,9 +39,12 @@ import frc.robot.util.CameraHandler;
 import edu.wpi.first.cameraserver.CameraServer;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -58,9 +60,9 @@ public class RobotContainer {
 
   private Joystick driverJoystick;
   private Joystick operatorJoystick;
-  
+
   private JoystickButton B_Driver; // Auto-shooting
-  private JoystickButton Y_Driver; // Reverse roller 
+  private JoystickButton Y_Driver; // Reverse roller
   private JoystickButton RB_Driver; // Change drivetrain direction & change cameras
   private JoystickButton LB_Driver; // Open Intake Joint & Spin roller
   private JoystickButton X_Driver; // Auto-shooting only within range
@@ -79,8 +81,11 @@ public class RobotContainer {
   private UsbCamera backward;
   private CameraHandler camHandler;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver, Intake intake, Limelight limelight) {
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
+  public RobotContainer(Climb climb, Feeder feeder, Shooter shooter, Driver driver, Intake intake,
+      Limelight limelight) {
     this.climb = climb;
     this.shooter = shooter;
     this.feeder = feeder;
@@ -88,19 +93,19 @@ public class RobotContainer {
     this.limelight = limelight;
     this.driver = driver;
 
-	  this.driverJoystick = new Joystick(0);
-	  this.operatorJoystick = new Joystick(1);
+    this.driverJoystick = new Joystick(0);
+    this.operatorJoystick = new Joystick(1);
 
+    buildCameras();
     buildDefaultCommands();
 
     // Configure the button bindings
     buildButtons();
     configureButtonBindings();
 
-    buildCameras();
   }
 
-  private void buildButtons(){
+  private void buildButtons() {
     this.LB_Driver = new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value);
     this.Y_Driver = new JoystickButton(driverJoystick, XboxController.Button.kY.value);
     this.RB_Driver = new JoystickButton(driverJoystick, XboxController.Button.kRightBumper.value);
@@ -110,7 +115,6 @@ public class RobotContainer {
     this.B_Driver = new JoystickButton(driverJoystick, XboxController.Button.kB.value);
     this.LT_TRIGGER_Driver = new Trigger(() -> driverJoystick.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.3);
 
-
     this.START_Operator = new JoystickButton(operatorJoystick, XboxController.Button.kStart.value);
     this.B_Operator = new JoystickButton(operatorJoystick, XboxController.Button.kB.value);
     this.X_Operator = new JoystickButton(operatorJoystick, XboxController.Button.kX.value);
@@ -119,54 +123,61 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@linkz
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
 
-    RumbleJoystick rumble = new RumbleJoystick(driverJoystick, () -> limelight.getDistance() * 0.1);
+    RumbleJoystick rumble = new RumbleJoystick(driverJoystick, () -> limelight.getDistance() * 0.2);
 
     this.RB_Driver.whenPressed(new InstantCommand(() -> {
       driver.setForward(!driver.isForward());
-      camHandler.switchCamera();   
+      camHandler.switchCamera();
     }, driver));
 
     // Shooter Control
     // Manual Control with static setpoint
-    LT_TRIGGER_Driver.whileActiveOnce(new AutoShooter(feeder, intake, shooter, () -> ShooterConstants.FALLBACK_RPM));
+    // B_Driver.whileActiveOnce(new AutoShooter(feeder, intake, shooter, () -> ShooterConstants.FALLBACK_RPM));
+    B_Driver.whileHeld(new AccelerateShooter(shooter, 0.2));
 
     // Using vision data for shooting
-    B_Driver.whenHeld(
-              new SequentialCommandGroup(rumble.until(() -> limelight.getIsThereTarget() && limelight.isDistanceInRange()), 
-              new AutoShooter(feeder, intake, shooter, () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance()))));
+    LT_TRIGGER_Driver.whileActiveContinuous(
+        new SequentialCommandGroup(rumble.until(() -> limelight.getIsThereTarget() && limelight.isDistanceInRange()),
+            new AutoShooter(feeder, intake, shooter,
+                () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance()))));
 
     // Manual Feeder Control
     X_Driver.whenHeld(new SpinOutBalls(feeder, -FeederConstants.FEEDER_VOLTAGE));
     // Intake control
-    Y_Driver.whileHeld(new ManualRoller(intake, -IntakeConstants.ROLLER_VOLTAGE)); // outaking "plita" (spinning roller in reverse)
-    LB_Driver.whenPressed(new ManualSolenoid(intake)); // Toggles open/closes the intake, also toggles the roller 
+    Y_Driver.whileHeld(new ManualRoller(intake, -IntakeConstants.ROLLER_VOLTAGE)); // outaking "plita" (spinning roller
+                                                                                   // in reverse)
+    LB_Driver.whenPressed(new ManualSolenoid(intake)); // Toggles open/closes the intake, also toggles the roller
 
     // Climb controls
-  	START_Operator.whenPressed(new InstantCommand(() -> climb.setEnabled(), climb));
+    START_Operator.whenPressed(new InstantCommand(() -> climb.enableClimb(), climb));
     RB_Operator.whenPressed(new ManualClawA(climb));
     LB_Operator.whenPressed(new ManualClawB(climb));
     B_Operator.whenPressed(new ManualClawA(climb));
     X_Operator.whenPressed(new ManualClawB(climb));
-   
-   }
+
+  }
 
   public void buildDefaultCommands() {
     // Default commands stay active all the time, if no other command is running.
     intake.setDefaultCommand(new ManualRoller(intake, IntakeConstants.ROLLER_VOLTAGE));
-    // shooter.setDefaultCommand(new AccelerateShooter(shooter, ShooterConstants.DEFAULT_CONSTANT_SPEED));
+    // shooter.setDefaultCommand(new AccelerateShooter(shooter,
+    // ShooterConstants.DEFAULT_CONSTANT_SPEED));
     driver.setDefaultCommand(new ArcadeDrive(driver,
-         () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value),
-         () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value),
-         () -> driverJoystick.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.3,
-         () -> false));
-    climb.setDefaultCommand(new ManualRotateChain(climb, () -> operatorJoystick.getRawAxis(XboxController.Axis.kRightY.value)));
+        () -> driverJoystick.getRawAxis(XboxController.Axis.kLeftY.value),
+        () -> driverJoystick.getRawAxis(XboxController.Axis.kRightX.value),
+        () -> driverJoystick.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.3,
+        () -> false));
+    climb.setDefaultCommand(
+        new ManualRotateChain(climb, () -> operatorJoystick.getRawAxis(XboxController.Axis.kRightY.value)));
   }
 
   private void buildCameras() {
@@ -175,5 +186,9 @@ public class RobotContainer {
 
     this.camHandler = new CameraHandler(forward, backward);
   }
-}
 
+
+  public CameraHandler getCamHandler() {
+      return camHandler;
+  }
+}

@@ -55,12 +55,13 @@ public class AutoShooter extends CommandBase {
     feeder.setFeederVolt(5); 
     shooter.setSpeedVelocity(setpointSupplier.getAsDouble());
     
-    System.out.println("Shooter Reported RPM: " + shooter.getShooterRPM());
-    System.out.println("Setpoint RPM: " + setpointSupplier.getAsDouble());
-    System.out.println("Difference: " + (setpointSupplier.getAsDouble() - shooter.getShooterRPM()));
-    System.out.println("-----------------------------------");
+    
+    // System.out.println("Shooter Reported RPM: " + shooter.getShooterRPM());
+    // System.out.println("Setpoint RPM: " + setpointSupplier.getAsDouble());
+    // System.out.println("Difference: " + (setpointSupplier.getAsDouble() - shooter.getShooterRPM()));
+    // System.out.println("-----------------------------------");
     if(shooter.isRPMinRange(setpointSupplier.getAsDouble()) && inRangeTime == 100000000){
-      System.out.println("Reached setpoint");
+      // System.out.println("Reached setpoint");
       feeder.setFeederSolenoid(true);  
       // inRangeTime = Timer.getFPGATimestamp();
     }

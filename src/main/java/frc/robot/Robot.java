@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     this.intake = new Intake();
     
     robotContainer = new RobotContainer(climb,feeder, shooter, driver, intake, limelight);
-    autoContainer = new AutoContainer(driver, shooter, feeder, intake);
+    autoContainer = new AutoContainer(driver, shooter, feeder, intake, limelight);
 
     LiveWindow.disableAllTelemetry();
     this.primoShuffleBoard = new PrimoShuffleBoard();
@@ -110,6 +110,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    robotContainer.getCamHandler().setCamera(1);
+    driver.setForward(false);
   }
 
   /** This function is called periodically during operator control. */

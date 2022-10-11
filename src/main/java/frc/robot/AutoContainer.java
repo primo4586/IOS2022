@@ -25,13 +25,13 @@ public class AutoContainer {
   private Map<String, Command> autoPaths;
 
 
-  public AutoContainer(Driver driver, Shooter shooter, Feeder feeder, Intake intake){
+  public AutoContainer(Driver driver, Shooter shooter, Feeder feeder, Intake intake, Limelight limelight){
     this.autoPaths = new HashMap<String, Command>();
 
 
 
-    OneBallAuto oneBallAuto = new OneBallAuto(driver, shooter, feeder, intake); // command group
-    TwoBallAuto twoBallAuto = new TwoBallAuto(driver, shooter, feeder, intake);
+    OneBallAuto oneBallAuto = new OneBallAuto(driver, shooter, feeder, intake, limelight); // command group
+    TwoBallAuto twoBallAuto = new TwoBallAuto(driver, shooter, feeder, intake, limelight);
 
     autoPaths.put("No Auto", new InstantCommand());
     autoPaths.put("One Ball Auto", oneBallAuto);
