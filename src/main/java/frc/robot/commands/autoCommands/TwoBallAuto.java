@@ -4,8 +4,6 @@
 
 package frc.robot.commands.autoCommands;
 
-import edu.wpi.first.math.interpolation.Interpolatable;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Limelight;
 import frc.robot.Constants.ShooterConstants;
@@ -17,13 +15,10 @@ import vision.InterpolateUtil;
 
 /** Add your docs here. */
 public class TwoBallAuto extends SequentialCommandGroup {
-
-
     public TwoBallAuto(Driver driver, Shooter shooter, Feeder feeder, Intake intake, Limelight limelight){
         AutoShooter shootBall = new AutoShooter(feeder, intake, shooter, () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance()));
-        ParallelRaceGroup takeBall = new ParallelRaceGroup(new OpenAndRotate(intake), new DriveByTime(driver, -2, 7)); // add time later
-        SequentialCommandGroup shootAgain = new SequentialCommandGroup(new DriveByTime(driver, 2, 7), new AutoShooter(feeder, intake, shooter, () -> InterpolateUtil.interpolate(ShooterConstants.SHOOTER_VISION_MAP, limelight.getDistance())).withTimeout(4)); // add time later
-        addCommands(shootBall.withTimeout(4), takeBall, shootAgain);
-}
+        DriveByTime driveBack = new DriveByTime(driver, -2, 4); // add time later
+        addCommands(shootBall.withTimeout(5.5), driveBack);
     }
-
+}
+    []

@@ -35,7 +35,7 @@ public final class Constants {
         public static final double LIMELIGHT_Y_ANGLE = 40;
 
         public static final double LIMELIGHT_HEIGHT = 0.73;
-        public static final double TARGET_HEIGHT = 2.50;
+        public static final double TARGET_HEIGHT = 2.59;
     }
 
     public static final class ShooterConstants {

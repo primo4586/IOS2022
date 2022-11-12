@@ -142,7 +142,7 @@ public class RobotContainer {
     // Shooter Control
     // Manual Control with static setpoint
     // B_Driver.whileActiveOnce(new AutoShooter(feeder, intake, shooter, () -> ShooterConstants.FALLBACK_RPM));
-    B_Driver.whileHeld(new AccelerateShooter(shooter, 0.2));
+    B_Driver.whileHeld(new AccelerateShooter(shooter, 0.6));
 
     // Using vision data for shooting
     LT_TRIGGER_Driver.whileActiveContinuous(

@@ -10,7 +10,7 @@ import java.util.Map;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.autonomous.CommandSelector;
-import frc.robot.commands.autoCommands.OneBallAuto;
+import frc.robot.commands.autoCommands.ThreeBallAuto;
 import frc.robot.commands.autoCommands.TwoBallAuto;
 import frc.robot.subsystems.Driver;
 import frc.robot.subsystems.Feeder;
@@ -30,12 +30,12 @@ public class AutoContainer {
 
 
 
-    OneBallAuto oneBallAuto = new OneBallAuto(driver, shooter, feeder, intake, limelight); // command group
-    TwoBallAuto twoBallAuto = new TwoBallAuto(driver, shooter, feeder, intake, limelight);
+    TwoBallAuto oneOrTwoBallAuto = new TwoBallAuto(driver, shooter, feeder, intake, limelight); // command group
+    ThreeBallAuto threeOrTwoBallAuto = new ThreeBallAuto(driver, shooter, feeder, intake, limelight);
 
     autoPaths.put("No Auto", new InstantCommand());
-    autoPaths.put("One Ball Auto", oneBallAuto);
-    autoPaths.put("Two Ball Auto", twoBallAuto);
+    autoPaths.put("Two Ball Auto", oneOrTwoBallAuto);
+    autoPaths.put("Three Ball Auto", threeOrTwoBallAuto );
     this.autoSelector = new CommandSelector(autoPaths, "Competiton Dashboard");
   }
 
